@@ -1,7 +1,9 @@
+import StockCard from '@/components/StockCard';
 import { DailyOpenClose } from '@/models/DailyOpenClose';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { GetServerSideProps } from 'next';
 import Head from "next/head";
+import { Card, Col, Container, Row } from 'react-bootstrap';
 
 export const getServerSideProps: GetServerSideProps<DailyOpenClose> = async () => {
   const response = await fetch("https://api.polygon.io/v1/open-close/AAPL/2023-09-14?adjusted=true&apiKey=" + process.env.POLYGON_API_KEY);
@@ -11,11 +13,11 @@ export const getServerSideProps: GetServerSideProps<DailyOpenClose> = async () =
   }
 }
 
-const Quote = (stockData: DailyOpenClose) => {
+const Quote = (stockData : DailyOpenClose) => {
   return (
     <main>
-      <h1>Stock Profile</h1>
-      <div>{ JSON.stringify(stockData) }</div>
+      <h1 className="py-4 display-4 text-center fw-bold">{ stockData.symbol }</h1>
+      <StockCard stockData={ stockData } />
     </main>
   );
 }

@@ -1,3 +1,7 @@
 .pageContainer {
   padding: 2rem auto;
 }
+
+.cardDimensions {
+  min-height: 15rem;
+}
