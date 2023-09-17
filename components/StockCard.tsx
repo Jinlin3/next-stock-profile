@@ -1,23 +1,17 @@
 import { DailyOpenClose } from "@/models/DailyOpenClose";
 import { Card, Container, Row, Col } from "react-bootstrap";
+import StatsGrid from "./StatsGrid";
 
 interface StockCardProps {
   stockData: DailyOpenClose,
 }
 
-const StockCard = ({ stockData : { from, symbol, open, high, low, close, volume, afterHours, preMarket }}: StockCardProps) => {
+const StockCard = ({ stockData }: StockCardProps) => {
   return (
-    <Card className="h-100">
+    <Card className="h-100 bg-primary">
+      <Card.Title className="display-6 pt-4 text-center text-light fw-bold">{ stockData.from }</Card.Title>
       <Card.Body>
-        <Card.Title className="display-6">{symbol}</Card.Title>
-        <Card.Subtitle className="my-3">From: {from}</Card.Subtitle>
-        <Card.Text>Open: {open}</Card.Text>
-        <Card.Text>High: {high}</Card.Text>
-        <Card.Text>Low: {low}</Card.Text>
-        <Card.Text>Close: {close}</Card.Text>
-        <Card.Text>Volume: {volume}</Card.Text>
-        <Card.Text>After Hours: {afterHours}</Card.Text>
-        <Card.Text>Premarket: {preMarket}</Card.Text>
+        <StatsGrid stockData={stockData}/>
       </Card.Body>
     </Card>
   );
