@@ -3,10 +3,9 @@ import { DailyOpenClose } from '@/models/DailyOpenClose';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { GetServerSideProps } from 'next';
 import Head from "next/head";
-import { Card, Col, Container, Row } from 'react-bootstrap';
 
 export const getServerSideProps: GetServerSideProps<DailyOpenClose> = async () => {
-  const response = await fetch("https://api.polygon.io/v1/open-close/AAPL/2023-09-14?adjusted=true&apiKey=" + process.env.POLYGON_API_KEY);
+  const response = await fetch("https://api.polygon.io/v1/open-close/AAPL/2023-09-20?adjusted=true&apiKey=" + process.env.POLYGON_API_KEY);
   const dataResponse: DailyOpenClose = await response.json();
   return {
     props: dataResponse,
