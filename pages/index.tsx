@@ -25,7 +25,10 @@ export default function Home() {
           <h1 className="display-1 text-center">TradeTide</h1>
           <h2 className="lead text-center">Simple, Efficient, Accurate</h2>
         </div>
-        <Alert className="text-center">This section uses <strong>getServerSideProps</strong> to fetch data server-side on every request. This allows search engines to crawl the page content and <strong>improves SEO</strong>.</Alert>
+        <Alert className="text-center">
+          At the moment, this page uses <strong>client-side data fetching</strong> to fetch fresh data.
+          It will soon be converted to <strong>server-side data fetching</strong>.
+        </Alert>
         <Alert className="text-center">The <strong>Polygon API</strong> free subscription only allows for <strong>5 API Calls / Minute</strong>. Due to the API limitations, the data might not load.</Alert>
         <Form className="py-3">
           <Form.Group className="mb-3 d-flex flex-column align-items-center">

@@ -43,7 +43,7 @@ const ProfilePreviewCard = ( {name, imageURL} : ProfilePreviewCardProps ) => {
 
   return (
     <Card className="h-100" bg="light" text="muted">
-      <Card.Img src={imageURL} variant="top" className={ styles.cardImg } />
+      <Card.Img src={imageURL} variant="top" className="img-fluid" />
       <Card.Body>
         <Card.Title className="display-5">{ name }</Card.Title>
         <Card.Text className="mt-3">
