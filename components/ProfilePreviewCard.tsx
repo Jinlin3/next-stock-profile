@@ -24,9 +24,7 @@ const ProfilePreviewCard = ( {name, imageURL} : ProfilePreviewCardProps ) => {
         setDataError(false);
         const response = await fetch("/api/search-prices?q=" + name);
         const stockData: DailyOpenClose = await response.json();
-        console.log(`error: ${stockData.error}`)
         if (stockData.error) { // handles specific error responses from the API
-          console.log("API Error:", stockData.error)
           setDataError(true);
         } else {
           setData(stockData);
@@ -42,21 +40,26 @@ const ProfilePreviewCard = ( {name, imageURL} : ProfilePreviewCardProps ) => {
   useEffect(() => {
     getData(name);
   }, [name]);
-  console.log(`Error?: ${dataError}`);
 
   return (
-    <Card className={`${styles.cardDimensions}`} bg="light" text="muted">
+    <Card className="h-100" bg="light" text="muted">
       <Card.Img src={imageURL} variant="top" className={ styles.cardImg } />
       <Card.Body>
         <Card.Title className="display-5">{ name }</Card.Title>
-        <Card.Text>
+        <Card.Text className="mt-3">
           { isLoading && <Spinner animation="border" /> }
           { dataError && <p>Something went wrong with the API.</p> }
           { data && !dataError && (
-            <div>
-              <p>Open: ${data.open}</p>
-              <p>Close: ${data.close}</p>
-            </div>
+            <>
+              <div className="d-flex justify-content-between">
+                <p>Open</p>
+                <p className="fw-bold">${data.open}</p>
+              </div>
+              <div className="d-flex justify-content-between">
+                <p>Close</p>
+                <p className="fw-bold">${data.close}</p>
+              </div>
+            </>            
           )}
         </Card.Text>
       </Card.Body>
