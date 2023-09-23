@@ -5,3 +5,8 @@
 .cardDimensions {
   min-height: 15rem;
 }
+
+.cardImg {
+  max-width: 400px;
+  height: auto;
+}
