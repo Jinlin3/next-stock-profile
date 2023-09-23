@@ -25,6 +25,8 @@ export default function Home() {
           <h1 className="display-1 text-center">TradeTide</h1>
           <h2 className="lead text-center">Simple, Efficient, Accurate</h2>
         </div>
+        <Alert className="text-center">This section uses <strong>getServerSideProps</strong> to fetch data server-side on every request. This allows search engines to crawl the page content and <strong>improves SEO</strong>.</Alert>
+        <Alert className="text-center">The <strong>Polygon API</strong> free subscription only allows for <strong>5 API Calls / Minute</strong>. Due to the API limitations, the data might not load.</Alert>
         <Form className="py-3">
           <Form.Group className="mb-3 d-flex flex-column align-items-center">
             <Form.Label className="display-4">Search Individual Stocks</Form.Label>
@@ -35,7 +37,6 @@ export default function Home() {
           </div>
         </Form>
         <h2 className="display-5 text-center my-4">Popular Tech Companies</h2>
-        <Alert>This section uses <strong>getServerSideProps</strong> to fetch data server-side on every request. This allows search engines to crawl the page content and <strong>improves SEO</strong>.</Alert>
         <div className="pb-5 justify-content-center">
           <Row xs={1} sm={2} xl={3} className="g-3">
             {companies.map((company) => (

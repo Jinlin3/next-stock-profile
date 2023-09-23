@@ -8,8 +8,8 @@ interface StockCardProps {
 
 const StockCard = ({ stockData }: StockCardProps) => {
   return (
-    <Card className="h-100 bg-primary">
-      <Card.Title className="display-6 pt-4 text-center text-light fw-bold">{ stockData.from }</Card.Title>
+    <Card className="h-100">
+      <Card.Title className="display-6 pt-4 text-center">{ stockData.from }</Card.Title>
       <Card.Body>
         <StatsGrid stockData={stockData}/>
       </Card.Body>

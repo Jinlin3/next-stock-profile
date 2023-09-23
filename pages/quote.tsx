@@ -15,7 +15,7 @@ export const getServerSideProps: GetServerSideProps<DailyOpenClose> = async () =
 const Quote = (stockData : DailyOpenClose) => {
   return (
     <main>
-      <h1 className="py-4 display-4 text-center fw-bold">{ stockData.symbol }</h1>
+      <h1 className="display-1 text-center my-3">{ stockData.symbol }</h1>
       <StockCard stockData={ stockData } />
     </main>
   );
