@@ -88,7 +88,7 @@ export default function Home({companyPreviewDataArray}: HomeProps) {
         </Form>
         <h2 className="display-5 text-center my-4 text-white">Largest Companies</h2>
         <div className="pb-5">
-          <Row xs={1} sm={2} xl={3} className="g-3 align-items-center">
+          <Row xs={1} sm={2} xl={3} className="g-4 align-items-center">
             {companyPreviewDataArray.map((company) => (
               <Col xl={3} lg={3} md={6} xs={10} key={company.name} className="mx-auto">
                 <ProfilePreviewCard name={company.name} imageURL={company.imageURL} stockData={company.stockData} />
