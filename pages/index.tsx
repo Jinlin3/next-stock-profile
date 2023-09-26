@@ -29,10 +29,19 @@ const companies: CompanyNameAndURL[] = [
   { name: 'NVDA', URL: 'https://cdn-icons-png.flaticon.com/512/732/732230.png'},
 ];
 
+// gets current date to concat the api string
+const currentDate = new Date();
+const date = currentDate.getDate().toString().padStart(2, '0');
+const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+const year = currentDate.getFullYear().toString();
+const formattedDate = `${year}-${month}-${date}`;
+console.log(formattedDate);
+
+// fetches data server side
 export const getServerSideProps: GetServerSideProps<HomeProps> = async () => {
   let companyPreviewDataArray: companyPreviewData[] = [];
   for (const company of companies) {
-    const response = await fetch(`https://api.polygon.io/v1/open-close/${company.name}/2023-01-09?adjusted=true&apiKey=${process.env.POLYGON_API_KEY}`);
+    const response = await fetch(`https://api.polygon.io/v1/open-close/${company.name}/${formattedDate}?adjusted=true&apiKey=${process.env.POLYGON_API_KEY}`);
     const dataResponse = await response.json();
     companyPreviewDataArray.push({
       name: company.name,
@@ -55,6 +64,7 @@ export default function Home({companyPreviewDataArray}: HomeProps) {
         <div className="d-flex flex-column align-items-center py-3">
           <h1 className="display-1 text-center">TradeTide</h1>
           <h2 className="lead text-center">Simple, Efficient, Accurate</h2>
+          <h3 className="mt-2 text-center">{`Current Date: ${currentDate}`}</h3>
         </div>
         <Alert className="text-center">
           This page uses <strong>getServerSideProps</strong> to fetch data server side, which <strong>improves user experience and SEO.</strong>
@@ -66,10 +76,10 @@ export default function Home({companyPreviewDataArray}: HomeProps) {
         <Form className="py-3">
           <Form.Group className="mb-3 d-flex flex-column align-items-center">
             <Form.Label className="display-4">Search Individual Stocks</Form.Label>
-            <Form.Control name="searchQuery" placeholder="E.g. JNJ, WMT, TSM, ..." />
+            <Form.Control name="searchQuery" placeholder="E.g. JNJ, WMT, TSM, ..." className="py-3" />
           </Form.Group>
           <div className="d-flex flex-column align-items-center">
-            <Button type="submit">Search</Button>
+            <Button className="btn-lg" type="submit">Search</Button>
           </div>
         </Form>
         <h2 className="display-5 text-center my-4">Top Tech Companies</h2>

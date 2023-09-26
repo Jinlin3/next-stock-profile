@@ -12,7 +12,6 @@ interface ProfilePreviewCardProps {
 
 // Below is not working for some reason.
 const ProfilePreviewCard = ( {name, imageURL, stockData} : ProfilePreviewCardProps ) => {
-  console.log("here is the object: " + stockData);
   return (
     <Card className="h-100" bg="light" text="muted" style={{ width: '18rem' }}>
       <Card.Img src={imageURL} variant="top" className="img-fluid" />
