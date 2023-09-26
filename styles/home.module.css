@@ -1,9 +1,14 @@
 .h1Styles {
   color: #f64c72;
-  font-weight: 400;
+  font-weight: 500;
+  margin-bottom: -8px;
 }
 
 .subHeadingStyles {
   color: #f64c72;
   font-weight: 300;
+}
+
+.searchBarStyles:focus {
+  outline: none;
 }
