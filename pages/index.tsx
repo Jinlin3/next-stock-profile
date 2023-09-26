@@ -83,7 +83,7 @@ export default function Home({companyPreviewDataArray}: HomeProps) {
             <Form.Control name="searchQuery" placeholder="E.g. JNJ, WMT, TSM, ..." className={`py-3 ${styles.searchBarStyles}`}/>
           </Form.Group>
           <div className="d-flex flex-column align-items-center">
-            <Button className="btn-lg" type="submit">Search</Button>
+            <Button className={`btn-lg shadow-sm ${styles.searchBarButtonStyles}`} type="submit">Search</Button>
           </div>
         </Form>
         <h2 className="display-5 text-center my-4 text-white">Largest Companies</h2>

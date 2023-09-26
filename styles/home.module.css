@@ -9,6 +9,19 @@
   font-weight: 300;
 }
 
-.searchBarStyles:focus {
-  outline: none;
+.searchBarStyles {
+  border-radius: 50px;
+  border: none;
+  font-size: 20px;
+  padding-left: 30px;
+}
+
+.searchBarButtonStyles {
+  background-color: #f64c72;
+  border: 0;
+  transition: background-color 0.05s;
+}
+
+.searchBarButtonStyles:hover {
+  background-color: #da4666;
 }
