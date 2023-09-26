@@ -1,10 +1,11 @@
 import Head from 'next/head'
-import { Inter } from 'next/font/google'
+import { Open_Sans } from 'next/font/google'
 import { Alert, Button, Col, Container, Form, Row } from 'react-bootstrap';
 import ProfilePreviewCard from '@/components/ProfilePreviewCard';
 import { CompanyNameAndURL } from '@/models/CompanyNameAndURL';
 import { DailyOpenClose } from '@/models/DailyOpenClose';
 import { GetServerSideProps } from 'next';
+import styles from '@/styles/home.module.css';
 
 interface companyPreviewData {
   name: string,
@@ -16,7 +17,7 @@ interface HomeProps {
   companyPreviewDataArray: companyPreviewData[],
 }
 
-const inter = Inter({ subsets: ['latin'] });
+const openSans = Open_Sans({ subsets: ['latin'] });
 
 const companies: CompanyNameAndURL[] = [
   { name: 'AAPL', URL: 'https://static.vecteezy.com/system/resources/previews/017/221/833/non_2x/apple-logo-free-png.png'},
@@ -31,9 +32,11 @@ const companies: CompanyNameAndURL[] = [
 
 // gets current date to concat the api string
 const currentDate = new Date();
-const date = currentDate.getDate().toString().padStart(2, '0');
-const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
-const year = currentDate.getFullYear().toString();
+const yesterday = new Date(currentDate);
+yesterday.setDate(currentDate.getDate() - 1)
+const date = yesterday.getDate().toString().padStart(2, '0');
+const month = (yesterday.getMonth() + 1).toString().padStart(2, '0');
+const year = yesterday.getFullYear().toString();
 const formattedDate = `${year}-${month}-${date}`;
 console.log(formattedDate);
 
@@ -55,34 +58,34 @@ export const getServerSideProps: GetServerSideProps<HomeProps> = async () => {
 }
 
 export default function Home({companyPreviewDataArray}: HomeProps) {
+  console.log(companyPreviewDataArray);
   return (
     <>
       <Head>
         <title>Home - TRADETIDE</title>
       </Head>
-      <main>
-        <div className="d-flex flex-column align-items-center py-3">
-          <h1 className="display-1 text-center">TradeTide</h1>
-          <h2 className="lead text-center">Simple, Efficient, Accurate</h2>
-          <h3 className="mt-2 text-center">{`Current Date: ${currentDate}`}</h3>
+      <main className={openSans.className}>
+        <div className="d-flex flex-column align-items-center pb-3">
+          <h1 className={`display-1 text-center ${styles.h1Styles}`}>TradeTide</h1>
+          <h2 className={`text-center ${styles.subHeadingStyles}`}>Simple and Accurate Data</h2>
+          <h3 className="mt-2 text-center text-white">{`Yesterday: ${formattedDate}`}</h3>
         </div>
         <Alert className="text-center">
           This page uses <strong>getServerSideProps</strong> to fetch data server side, which <strong>improves user experience and SEO.</strong>
         </Alert>
         <Alert className="text-center">
-          This page runs on <strong><a href="https://polygon.io/">polygon.io</a></strong>.
-          
+          This page runs on <strong><a href="https://polygon.io/" target="_blank">polygon.io</a></strong>.
         </Alert>
         <Form className="py-3">
           <Form.Group className="mb-3 d-flex flex-column align-items-center">
-            <Form.Label className="display-4">Search Individual Stocks</Form.Label>
+            <Form.Label className="display-4 text-white fw-300">Search Individual Stocks</Form.Label>
             <Form.Control name="searchQuery" placeholder="E.g. JNJ, WMT, TSM, ..." className="py-3" />
           </Form.Group>
           <div className="d-flex flex-column align-items-center">
             <Button className="btn-lg" type="submit">Search</Button>
           </div>
         </Form>
-        <h2 className="display-5 text-center my-4">Top Tech Companies</h2>
+        <h2 className="display-5 text-center my-4 text-white">Top Tech Companies</h2>
         <div className="pb-5 justify-content-center">
           <Row xs={1} sm={2} xl={3} className="g-3">
             {companyPreviewDataArray.map((company) => (

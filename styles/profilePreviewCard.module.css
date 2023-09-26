@@ -2,4 +2,15 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background-color: rgb(31, 31, 31);
+  border: 1px solid rgb(46, 46, 46);
+  color: white;
+}
+
+.imageStyles {
+  background-color: white;
+}
+
+.listGroupStyles {
+  background-color: rgb(31, 31, 31);
 }

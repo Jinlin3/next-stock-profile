@@ -13,12 +13,12 @@ interface ProfilePreviewCardProps {
 // Below is not working for some reason.
 const ProfilePreviewCard = ( {name, imageURL, stockData} : ProfilePreviewCardProps ) => {
   return (
-    <Card className="h-100" bg="light" text="muted" style={{ width: '18rem' }}>
-      <Card.Img src={imageURL} variant="top" className="img-fluid" />
-      <Card.Body>
+    <Card className="h-100 border-none" bg="dark" text="white" style={{ width: '18rem' }}>
+      <Card.Img src={imageURL} variant="top" className={`img-fluid ${styles.imageStyles}`} />
+      <Card.Body className="mt-2">
         <Card.Title className="display-5">{ name }</Card.Title>
       </Card.Body>
-      <ListGroup variant="flush">
+      <ListGroup variant="flush" className={`${styles.listGroupStyles}`}>
         <ListGroup.Item className={`lead ${styles.listItemStyle}`}>Open: <strong>${ (stockData.open)?.toFixed(2) }</strong></ListGroup.Item>
         <ListGroup.Item className={`lead ${styles.listItemStyle}`}>Close: <strong>${ stockData.close?.toFixed(2) }</strong></ListGroup.Item>
       </ListGroup>
