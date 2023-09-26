@@ -18,7 +18,7 @@ const ProfilePreviewCard = ( {name, imageURL, stockData} : ProfilePreviewCardPro
   return (
     // Will configure the anchor tag so it goes to an individual page
     <a href="">
-      <Card className={`h-100 border-none ${styles.cardStyles}`} text="white">
+      <Card className={`h-100 border-none shadow ${styles.cardStyles}`} text="white">
         <Card.Img src={imageURL} variant="top" className={`img-fluid ${styles.imageStyles}`} />
         <Card.Body className="mt-2">
           <Card.Title className={`display-5 ${styles.cardTitleStyles} ${montserrat.className}`}>{ name }</Card.Title>

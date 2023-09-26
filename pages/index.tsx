@@ -80,7 +80,7 @@ export default function Home({companyPreviewDataArray}: HomeProps) {
         <Form className="py-3">
           <Form.Group className="mb-3 d-flex flex-column align-items-center">
             <Form.Label className="display-4 text-white fw-300">Search Individual Stocks</Form.Label>
-            <Form.Control name="searchQuery" placeholder="E.g. JNJ, WMT, TSM, ..." className={`py-3 ${styles.searchBarStyles}`}/>
+            <Form.Control name="searchQuery" placeholder="E.g. JNJ, WMT, TSM, ..." className={`py-3 shadow ${styles.searchBarStyles}`}/>
           </Form.Group>
           <div className="d-flex flex-column align-items-center">
             <Button className={`btn-lg shadow-sm ${styles.searchBarButtonStyles}`} type="submit">Search</Button>
