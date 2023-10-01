@@ -6,7 +6,7 @@ interface StockCardProps {
   stockData: DailyOpenClose,
 }
 
-const StockCard = ({ stockData }: StockCardProps) => {
+const StockDetailsCard = ({ stockData }: StockCardProps) => {
   return (
     <Card className="h-100">
       <Card.Title className="display-6 pt-4 text-center">{ stockData.from }</Card.Title>
@@ -17,4 +17,4 @@ const StockCard = ({ stockData }: StockCardProps) => {
   );
 }
  
-export default StockCard;
+export default StockDetailsCard;

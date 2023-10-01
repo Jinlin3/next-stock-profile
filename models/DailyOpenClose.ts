@@ -1,5 +1,5 @@
 export interface DailyOpenClose {
-  status: string,
+  status?: string,
   error?: string,
   afterHours?: number,
   close?: number,

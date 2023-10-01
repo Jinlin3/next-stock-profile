@@ -15,7 +15,7 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <div className={ roboto.className }>
       <Head>
-        <title>TradeTide</title>
+        <title key="title">TradeTide</title>
         <meta name="description" content="Accurate Stock Prices" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />

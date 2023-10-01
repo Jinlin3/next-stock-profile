@@ -34,7 +34,7 @@ const companies: CompanyNameAndURL[] = [
 // gets current date to concat the api string
 const currentDate = new Date();
 const yesterday = new Date(currentDate);
-yesterday.setDate(currentDate.getDate() - 1)
+yesterday.setDate(currentDate.getDate() - 2)
 const date = yesterday.getDate().toString().padStart(2, '0');
 const month = (yesterday.getMonth() + 1).toString().padStart(2, '0');
 const year = yesterday.getFullYear().toString();
@@ -63,12 +63,12 @@ export default function Home({companyPreviewDataArray}: HomeProps) {
   return (
     <>
       <Head>
-        <title>Home - TRADETIDE</title>
+        <title key="title">Home - TRADETIDE</title>
       </Head>
       <main className={openSans.className}>
         <div className="d-flex flex-column align-items-center pb-3">
-          <h1 className={`display-1 text-center ${styles.h1Styles} ${montserrat.className}`}>TradeTide</h1>
-          <h2 className={`text-center ${styles.subHeadingStyles}`}>Simple and Accurate Data</h2>
+          <h1 className={`display-1 text-center ${styles.h1Styles} ${montserrat.className}`}>YesterTrade</h1>
+          <h2 className={`text-center ${styles.subHeadingStyles}`}>Simple and Accurate Data... for Yesterday</h2>
           <h3 className="mt-2 text-center text-white">{`Yesterday: ${formattedDate}`}</h3>
         </div>
         <Alert className="text-center">
@@ -79,7 +79,7 @@ export default function Home({companyPreviewDataArray}: HomeProps) {
         </Alert>
         <Form className="py-3">
           <Form.Group className="mb-3 d-flex flex-column align-items-center">
-            <Form.Label className="display-4 text-white fw-300">Search Individual Stocks</Form.Label>
+            <Form.Label className="display-4 text-white fw-300 text-center">Search Individual Stocks</Form.Label>
             <Form.Control name="searchQuery" placeholder="E.g. JNJ, WMT, TSM, ..." className={`py-3 shadow ${styles.searchBarStyles}`}/>
           </Form.Group>
           <div className="d-flex flex-column align-items-center">
