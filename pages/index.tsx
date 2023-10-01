@@ -6,6 +6,7 @@ import { CompanyNameAndURL } from '@/models/CompanyNameAndURL';
 import { DailyOpenClose } from '@/models/DailyOpenClose';
 import { GetServerSideProps } from 'next';
 import styles from '@/styles/home.module.css';
+import Link from 'next/link';
 
 interface companyPreviewData {
   name: string,

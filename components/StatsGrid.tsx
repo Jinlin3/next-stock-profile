@@ -22,7 +22,7 @@ const StatsGrid = ({ stockData : { from, symbol, open, high, low, close, volume,
           <div className="bg-secondary text-light text-center p-3 rounded border border-light">Close: ${close.toFixed(2)}</div> 
         </Col>
         <Col className="lead" md={6} lg={4}>
-          <div className="bg-secondary text-light text-center p-3 rounded border border-light">Volume: {(volume / 1000000).toFixed(2)}M</div> 
+          <div className="bg-secondary text-light text-center p-3 rounded border border-light">Volume: {(volume / 1000000).toFixed(2)}M</div>
         </Col>
         <Col className="lead" md={6} lg={4}>
           <div className="bg-secondary text-light text-center p-3 rounded border border-light">After Hours: ${afterHours.toFixed(2)}</div> 

@@ -1,6 +1,5 @@
 import ProfileDetailsCard from '@/components/ProfileDetailsCard';
 import { DailyOpenClose } from '@/models/DailyOpenClose';
-import { ResultItem, Ticker } from '@/models/Ticker';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { GetStaticProps, GetStaticPaths } from 'next';
 import Head from "next/head";
@@ -22,10 +21,17 @@ interface QuoteProps {
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const response = await fetch(`https://api.polygon.io/v3/reference/tickers?active=true&apiKey=${process.env.POLYGON_API_KEY}`);
-  const apiResponse: Ticker = await response.json();
-  const initialResponseResults = apiResponse.results;
-  const paths = initialResponseResults.map((result: ResultItem) => ({ params: {category: result.ticker} }));
+  const companies = [
+    'AAPL',
+    'MSFT',
+    'V',
+    'GOOG',
+    'AMZN',
+    'NVDA',
+    'META',
+    'TSLA',
+  ]
+  const paths = companies.map(company => ({ params: {quote: company} }));
   console.log(paths);
   return {
     paths,
