@@ -1,5 +1,5 @@
 import { Col, Container, Row } from "react-bootstrap";
-import { DailyOpenClose } from "@/models/DailyOpenClose";
+import { DailyOpenClose } from "@/models/PolygonResponse";
 
 export interface StatsGridProps {
   stockData: DailyOpenClose,

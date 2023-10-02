@@ -1,5 +1,5 @@
 import ProfileDetailsCard from '@/components/ProfileDetailsCard';
-import { DailyOpenClose } from '@/models/DailyOpenClose';
+import { DailyOpenClose } from '@/models/PolygonResponse';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { GetStaticProps, GetStaticPaths } from 'next';
 import Head from "next/head";

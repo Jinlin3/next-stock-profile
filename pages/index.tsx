@@ -3,7 +3,7 @@ import { Open_Sans, Montserrat } from 'next/font/google'
 import { Alert, Button, Col, Container, Form, Row } from 'react-bootstrap';
 import ProfilePreviewCard from '@/components/ProfilePreviewCard';
 import { CompanyNameAndURL } from '@/models/CompanyNameAndURL';
-import { DailyOpenClose } from '@/models/DailyOpenClose';
+import { DailyOpenClose, PreviousClose, StockPrices } from '@/models/PolygonResponse';
 import { GetServerSideProps } from 'next';
 import styles from '@/styles/home.module.css';
 import Link from 'next/link';
@@ -11,7 +11,7 @@ import Link from 'next/link';
 interface companyPreviewData {
   name: string,
   imageURL: string,
-  stockData: DailyOpenClose,
+  stockData: StockPrices,
 }
 
 interface HomeProps {
@@ -35,7 +35,7 @@ const companies: CompanyNameAndURL[] = [
 // gets current date to concat the api string
 const currentDate = new Date();
 const yesterday = new Date(currentDate);
-yesterday.setDate(currentDate.getDate() - 2)
+yesterday.setDate(currentDate.getDate() - 1)
 const date = yesterday.getDate().toString().padStart(2, '0');
 const month = (yesterday.getMonth() + 1).toString().padStart(2, '0');
 const year = yesterday.getFullYear().toString();
@@ -46,12 +46,12 @@ console.log(formattedDate);
 export const getServerSideProps: GetServerSideProps<HomeProps> = async () => {
   let companyPreviewDataArray: companyPreviewData[] = [];
   for (const company of companies) {
-    const response = await fetch(`https://api.polygon.io/v1/open-close/${company.name}/${formattedDate}?adjusted=true&apiKey=${process.env.POLYGON_API_KEY}`);
-    const dataResponse = await response.json();
+    const response = await fetch(`https://api.polygon.io/v2/aggs/ticker/${company.name}/prev?adjusted=true&apiKey=${process.env.POLYGON_API_KEY}`);
+    const apiResponse: PreviousClose = await response.json();
     companyPreviewDataArray.push({
       name: company.name,
       imageURL: company.URL,
-      stockData: dataResponse,
+      stockData: apiResponse.results[0],
     });
   }
   return {
@@ -70,7 +70,7 @@ export default function Home({companyPreviewDataArray}: HomeProps) {
         <div className="d-flex flex-column align-items-center pb-3">
           <h1 className={`display-1 text-center ${styles.h1Styles} ${montserrat.className}`}>YesterTrade</h1>
           <h2 className={`text-center ${styles.subHeadingStyles}`}>Simple and Accurate Data... for Yesterday</h2>
-          <h3 className="mt-2 text-center text-white">{`Yesterday: ${formattedDate}`}</h3>
+          <h3 className="mt-2 text-center text-white">{`Yesterday's Date: ${formattedDate}`}</h3>
         </div>
         <Alert className="text-center">
           This page uses <strong>getServerSideProps</strong> to fetch data server side, which allows for <strong>improved user experience and SEO.</strong>

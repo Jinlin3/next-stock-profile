@@ -1,4 +1,4 @@
-import { DailyOpenClose } from "@/models/DailyOpenClose";
+import { DailyOpenClose } from "@/models/PolygonResponse";
 import { Card, Container, Row, Col } from "react-bootstrap";
 import StatsGrid from "./StatsGrid";
 
