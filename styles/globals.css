@@ -21,7 +21,10 @@ body {
 }
 
 body {
-  background: #242582;
+  background-color: #0000006b;
+  background-image: url('https://images.unsplash.com/photo-1538970272646-f61fabb3a8a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1990&q=80');
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 a {

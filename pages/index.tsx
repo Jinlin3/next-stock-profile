@@ -66,7 +66,7 @@ export default function Home({companyPreviewDataArray}: HomeProps) {
       <Head>
         <title key="title">Home - TRADETIDE</title>
       </Head>
-      <main className={openSans.className}>
+      <main className={`${openSans.className}`}>
         <div className="d-flex flex-column align-items-center pb-3">
           <h1 className={`display-1 text-center ${styles.h1Styles} ${montserrat.className}`}>YesterTrade</h1>
           <h2 className={`text-center ${styles.subHeadingStyles}`}>Simple and Accurate Data... for Yesterday</h2>
@@ -78,15 +78,6 @@ export default function Home({companyPreviewDataArray}: HomeProps) {
         <Alert className="text-center">
           This page runs on <strong><a href="https://polygon.io/" target="_blank">polygon.io</a></strong>.
         </Alert>
-        <Form className="py-3">
-          <Form.Group className="mb-3 d-flex flex-column align-items-center">
-            <Form.Label className="display-4 text-white fw-300 text-center">Search Individual Stocks</Form.Label>
-            <Form.Control name="searchQuery" placeholder="E.g. JNJ, WMT, TSM, ..." className={`py-3 shadow ${styles.searchBarStyles}`}/>
-          </Form.Group>
-          <div className="d-flex flex-column align-items-center">
-            <Button className={`btn-lg shadow-sm ${styles.searchBarButtonStyles}`} type="submit">Search</Button>
-          </div>
-        </Form>
         <h2 className="display-5 text-center my-4 text-white">Largest Companies</h2>
         <div className="pb-5">
           <Row xs={1} sm={2} xl={3} className="g-4 align-items-center">

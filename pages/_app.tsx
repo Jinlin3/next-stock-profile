@@ -13,7 +13,7 @@ const roboto = Roboto({
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <div className={ roboto.className }>
+    <div className={`${roboto.className}`}>
       <Head>
         <title key="title">TradeTide</title>
         <meta name="description" content="Accurate Stock Prices" />

@@ -1,18 +1,9 @@
-.listItemStyle {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #f64c72;
-  border: 1px solid #c43b59;
-  color: white;
-}
-
 .imageStyles {
   background-color: white;
 }
 
 .cardStyles {
-  background-color: #f64c72;
+  background-color: #7c7c7c2b;
   border: 1px solid white;
 }
 
@@ -20,6 +11,19 @@
   font-weight: 500;
 }
 
+.cardBodyStyles {
+  background-color: #7c7c7c2b;
+}
+
 .listGroupStyles {
-  background-color: #f64c72;
+  background-color: #7c7c7c2b;
+}
+
+.listItemStyle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #7c7c7c2b;
+  border: 1px solid white;
+  color: white;
 }
