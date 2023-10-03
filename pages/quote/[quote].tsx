@@ -1,5 +1,5 @@
 import ProfileDetailsCard from '@/components/ProfileDetailsCard';
-import { DailyOpenClose } from '@/models/PolygonResponse';
+import { DailyOpenClose, PreviousClose, StockPrices } from '@/models/PolygonResponse';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { GetStaticProps, GetStaticPaths } from 'next';
 import Head from "next/head";
@@ -17,7 +17,7 @@ const formattedDate = `${year}-${month}-${date}`;
 console.log(formattedDate);
 
 interface QuoteProps {
-  stockData: DailyOpenClose,
+  stockData: StockPrices,
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
@@ -42,15 +42,16 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps<QuoteProps> = async ({params}) => {
   const symbol = params?.quote?.toString();
   console.log(symbol);
-  const response = await fetch(`https://api.polygon.io/v1/open-close/${symbol}/${formattedDate}?adjusted=true&apiKey=${process.env.POLYGON_API_KEY}`);
-  const apiResponse: DailyOpenClose = await response.json();
+  const response = await fetch(`https://api.polygon.io/v2/aggs/ticker/${symbol}/prev?adjusted=true&apiKey=${process.env.POLYGON_API_KEY}`);
+  const apiResponse: PreviousClose = await response.json();
   return {
-    props: { stockData: apiResponse },
+    props: { stockData: apiResponse.results[0] },
     revalidate: 5 * 60,
   }
 }
 
 const Quote = ({stockData} : QuoteProps) => {
+  console.log(stockData);
   const router = useRouter();
   const symbol = router.query.quote?.toString();
   return (
@@ -58,8 +59,8 @@ const Quote = ({stockData} : QuoteProps) => {
       <Head>
         <title key="title">{`Stock Price - ${symbol}`}</title>
       </Head>
-      <h1 className="display-1 text-center my-3">{ stockData.symbol }</h1>
-      <ProfileDetailsCard stockData={ stockData } />
+      <h1 className="display-1 text-center my-3">{ stockData.T }</h1>
+      <ProfileDetailsCard stockData={ stockData } date={ formattedDate } />
     </>
   );
 }

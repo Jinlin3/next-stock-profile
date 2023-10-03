@@ -1,15 +1,16 @@
-import { DailyOpenClose } from "@/models/PolygonResponse";
+import { DailyOpenClose, StockPrices } from "@/models/PolygonResponse";
 import { Card, Container, Row, Col } from "react-bootstrap";
 import StatsGrid from "./StatsGrid";
 
 interface StockCardProps {
-  stockData: DailyOpenClose,
+  stockData: StockPrices,
+  date: string,
 }
 
-const StockDetailsCard = ({ stockData }: StockCardProps) => {
+const StockDetailsCard = ({ stockData, date }: StockCardProps) => {
   return (
     <Card className="h-100">
-      <Card.Title className="display-6 pt-4 text-center">{ stockData.from }</Card.Title>
+      <Card.Title className="display-6 pt-4 text-center">{ date }</Card.Title>
       <Card.Body>
         <StatsGrid stockData={stockData}/>
       </Card.Body>
