@@ -32,3 +32,32 @@ export interface StockPrices {
   v: number,
   vw: number,
 }
+
+export interface TickerNews {
+  count: number,
+  next_url: string,
+  request_id: string,
+  results: Article[],
+  status: string,
+}
+
+export interface Article {
+  amp_url: string,
+  article_url: string,
+  author: string,
+  description: string,
+  id: string,
+  image_url: string,
+  keywords: string[],
+  published_utc: string
+  publisher: Publisher,
+  tickers: string[],
+  title: string,
+}
+
+export interface Publisher {
+  favicon_url: string,
+  homepage_url: string,
+  logo_url: string,
+  name: string,
+}

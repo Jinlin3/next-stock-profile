@@ -1,5 +1,5 @@
-import Head from 'next/head'
-import { Open_Sans, Montserrat } from 'next/font/google'
+import Head from 'next/head';
+import { Open_Sans, Montserrat } from 'next/font/google';
 import { Alert, Button, Col, Container, Form, Row } from 'react-bootstrap';
 import ProfilePreviewCard from '@/components/ProfilePreviewCard';
 import { CompanyNameAndURL } from '@/models/CompanyNameAndURL';
@@ -69,11 +69,11 @@ export default function Home({companyPreviewDataArray}: HomeProps) {
       <main className={`${openSans.className}`}>
         <div className="d-flex flex-column align-items-center pb-3">
           <h1 className={`display-1 text-center ${styles.h1Styles} ${montserrat.className}`}>YesterTrade</h1>
-          <h2 className={`text-center ${styles.subHeadingStyles}`}>Simple and Accurate Data... for Yesterday</h2>
+          <h2 className={`text-center ${styles.subHeadingStyles}`}>Simple and Accurate Data</h2>
           <h3 className="mt-2 text-center text-white">{`Yesterday's Date: ${formattedDate}`}</h3>
         </div>
         <Alert className="text-center">
-          This page uses <strong>getServerSideProps</strong> to fetch data server side, which allows for <strong>improved user experience and SEO.</strong>
+          This page uses <strong>getServerSideProps</strong> to fetch for server-side data fetching, which allows for <strong>improved user experience and SEO.</strong>
         </Alert>
         <Alert className="text-center">
           This page runs on <strong><a href="https://polygon.io/" target="_blank">polygon.io</a></strong>.

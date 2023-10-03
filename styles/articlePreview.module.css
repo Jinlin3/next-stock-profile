@@ -1,0 +1,9 @@
+.cardImgStyles {
+  width: 100%;
+  height: 11vw;
+  object-fit: cover;
+}
+
+.cardStyles {
+  border: 1px solid white;
+}

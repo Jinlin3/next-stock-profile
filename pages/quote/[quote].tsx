@@ -1,12 +1,14 @@
 import ProfileDetailsCard from '@/components/ProfileDetailsCard';
-import { DailyOpenClose, PreviousClose, StockPrices } from '@/models/PolygonResponse';
+import { Article, DailyOpenClose, PreviousClose, StockPrices, TickerNews } from '@/models/PolygonResponse';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { GetStaticProps, GetStaticPaths } from 'next';
 import Head from "next/head";
 import { useRouter } from 'next/router';
+import { Open_Sans, Montserrat } from 'next/font/google';
+import styles from '@/styles/quote.module.css';
+import { Alert } from 'react-bootstrap';
+import ArticlePreview from '@/components/ArticlePreview';
 
-// Error: A required parameter (quote) was not provided as a string received undefined in getStaticPaths for /quote/[quote]
-// gets current date to concat the api string
 const currentDate = new Date();
 const yesterday = new Date(currentDate);
 yesterday.setDate(currentDate.getDate() - 2);
@@ -16,8 +18,12 @@ const year = yesterday.getFullYear().toString();
 const formattedDate = `${year}-${month}-${date}`;
 console.log(formattedDate);
 
+const openSans = Open_Sans({ subsets: ['latin'] });
+const montserrat = Montserrat({subsets: ['latin']});
+
 interface QuoteProps {
   stockData: StockPrices,
+  articles: Article[],
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
@@ -43,14 +49,19 @@ export const getStaticProps: GetStaticProps<QuoteProps> = async ({params}) => {
   const symbol = params?.quote?.toString();
   console.log(symbol);
   const response = await fetch(`https://api.polygon.io/v2/aggs/ticker/${symbol}/prev?adjusted=true&apiKey=${process.env.POLYGON_API_KEY}`);
-  const apiResponse: PreviousClose = await response.json();
+  const previousCloseResponse: PreviousClose = await response.json();
+  const response2 = await fetch(`https://api.polygon.io/v2/reference/news?ticker=${symbol}&limit=10&apiKey=${process.env.POLYGON_API_KEY}`);
+  const tickerNewsResponse: TickerNews = await response2.json();
   return {
-    props: { stockData: apiResponse.results[0] },
+    props: {
+      stockData: previousCloseResponse.results[0],
+      articles: tickerNewsResponse.results,
+    },
     revalidate: 5 * 60,
   }
 }
 
-const Quote = ({stockData} : QuoteProps) => {
+const Quote = ({stockData, articles} : QuoteProps) => {
   console.log(stockData);
   const router = useRouter();
   const symbol = router.query.quote?.toString();
@@ -59,8 +70,17 @@ const Quote = ({stockData} : QuoteProps) => {
       <Head>
         <title key="title">{`Stock Price - ${symbol}`}</title>
       </Head>
-      <h1 className="display-1 text-center my-3">{ stockData.T }</h1>
-      <ProfileDetailsCard stockData={ stockData } date={ formattedDate } />
+      <main className={openSans.className}>
+        <h1 className={`display-1 text-center my-3 ${styles.h1Styles}`}>{ stockData.T }</h1>
+        <Alert className="text-center">
+          This page uses <strong>Dynamic Routing and getStaticProps</strong> for fast loading speeds, and it uses <strong>incremental static regeneration</strong> to show new data
+        </Alert>
+        <ProfileDetailsCard stockData={ stockData } date={ formattedDate } />
+        <h2 className={`display-4 text-center mt-5 ${styles.h1Styles}`}>{`Top ${symbol} Headlines`}</h2>
+        {articles.map((article) => (
+          <ArticlePreview key={article.title} article={article}></ArticlePreview>
+        ))}
+      </main>
     </>
   );
 }
