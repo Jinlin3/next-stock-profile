@@ -1,0 +1,7 @@
+.SearchBarStyles {
+  border: none;
+}
+
+.searchBarStyles:focus {
+  outline: none;
+}

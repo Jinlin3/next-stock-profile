@@ -75,7 +75,7 @@ export default function Home({companyPreviewDataArray}: HomeProps) {
           This page uses <strong>getServerSideProps</strong> to fetch for server-side data fetching, which allows for <strong>improved user experience and SEO.</strong>
         </Alert>
         <Alert className="text-center">
-          This page runs on <strong><a href="https://polygon.io/" target="_blank">polygon.io</a></strong>.
+          This page runs on <strong><a href="https://site.financialmodelingprep.com/" target="_blank">Financial Modeling Prep</a></strong> and <strong><a href="https://polygon.io/" target="_blank">polygon.io</a></strong>.
         </Alert>
         <h2 className="display-5 text-center my-4 text-white">Popular Tech Companies</h2>
         <div className="pb-5">
