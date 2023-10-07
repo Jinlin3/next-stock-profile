@@ -16,12 +16,14 @@ const NavBar = () => {
     }
   }
   return (  
-    <Navbar bg="dark" variant="dark" sticky="top" expand="sm" collapseOnSelect>
+    <Navbar bg="dark" variant="dark" sticky="top" expand="md" collapseOnSelect>
       <Container>
         <Navbar.Toggle aria-controls="navbar-collapse" />
         <Navbar.Collapse id="navbar-collapse">
           <Nav className="me-auto">
             <Nav.Link as={Link} href="/">Home</Nav.Link>
+            <Nav.Link href="#" disabled>Dow Jones</Nav.Link>
+            <Nav.Link href="#" disabled>NASDAQ-100</Nav.Link>
           </Nav>
           <Form className='d-flex' onSubmit={handleSubmit}>
             <Row className="d-flex align-items-center">
