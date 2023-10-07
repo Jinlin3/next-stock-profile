@@ -2,7 +2,7 @@
 
 This is an upgraded version of my react-stock-profile with cleaner code and responsive design.
 
-This website includes server-side rendering with NextJS.
+Capable of grabbing data from all NASDAQ-100 and Dow Jones companies.
 
 ## What I Learned from this Project
 
