@@ -73,18 +73,20 @@ const Quote = ({stockData, articles, aggregates} : QuoteProps) => {
   return (
     <>
       <Head>
-        <title key="title">{`Stock Price - ${symbol}`}</title>
+        <title key="title">{`TidalWave - ${symbol}`}</title>
       </Head>
       <main className={openSans.className}>
-        <h1 className={`display-1 text-center mt-3 ${styles.h1Styles}`}>{ stockData.T }</h1>
-        <h4 className={`display-6 text-center ${styles.h4Styles}`}>{ formattedDate }</h4>
+        <div className="d-flex flex-column align-items-center pb-3">
+          <h1 className={`display-1 text-center mt-3 ${styles.h1Styles}`}>{ stockData.T }</h1>
+          <h3 className={`text-white text-center text-nowrap ${styles.h4Styles}`}>{`Date: ${formattedDate}`}</h3>
+        </div>
         <Alert className="text-center mb-4">
           This page uses <strong>Dynamic Routing and getStaticProps</strong> for fast loading speeds, and it uses <strong>incremental static regeneration</strong> to show new data
         </Alert>
         <ProfileDetailsCard stockData={ stockData } date={ formattedDate } />
-        <h2 className={`text-center mt-5 display-4 ${styles.h1Styles}`}>{`${symbol} Stock`}</h2>
+        <h2 className={`text-center mt-5 display-4 ${styles.h2Styles}`}>{`Stock Price`}</h2>
         <StockChart aggregates={aggregates} />
-        <h2 className={`display-4 text-center my-5 ${styles.h1Styles}`}>{`Top ${symbol} Headlines`}</h2>
+        <h2 className={`display-4 text-center mt-5 mb-3 ${styles.h1Styles}`}>{`Top Headlines`}</h2>
         {articles.map((article) => (
           <ArticlePreview key={article.title} article={article}></ArticlePreview>
         ))}

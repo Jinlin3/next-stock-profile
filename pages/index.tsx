@@ -64,13 +64,13 @@ export default function Home({companyPreviewDataArray}: HomeProps) {
   return (
     <>
       <Head>
-        <title key="title">Home - YesterTrade</title>
+        <title key="title">Home - TidalWave</title>
       </Head>
       <main className={`${openSans.className}`}>
         <div className="d-flex flex-column align-items-center pb-3">
-          <h1 className={`display-1 text-center ${styles.h1Styles} ${montserrat.className}`}>YesterTrade</h1>
+          <h1 className={`display-1 text-center ${styles.h1Styles} ${montserrat.className}`}>TidalWave</h1>
           <h2 className={`text-center text-nowrap ${styles.subHeadingStyles}`}>Simple and Accurate Data</h2>
-          <h3 className="mt-2 text-center text-white text-nowrap">{`Yesterday's Date: ${formattedDate}`}</h3>
+          <h3 className="mt-2 text-center text-white text-nowrap">{`Date: ${formattedDate}`}</h3>
         </div>
         <Alert className="text-center">
           This page uses <strong>getServerSideProps</strong> to fetch for server-side data fetching, which allows for <strong>improved user experience and SEO.</strong>
