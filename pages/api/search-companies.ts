@@ -15,10 +15,6 @@ export default async function handler(
     const response = await fetch(`https://financialmodelingprep.com/api/v3/dowjones_constituent?apikey=${process.env.FMP_API_KEY}`);
     const apiResponse = await response.json();
     selectedIndex = apiResponse;
-  } else if (searchQuery === 'sp500') {
-    const response = await fetch(`https://financialmodelingprep.com/api/v3/sp500_constituent?apikey=${process.env.FMP_API_KEY}`);
-    const apiResponse = await response.json();
-    selectedIndex = apiResponse;
   } else if (searchQuery === 'nasdaq') {
     const response = await fetch(`https://financialmodelingprep.com/api/v3/nasdaq_constituent?apikey=${process.env.FMP_API_KEY}`);
     const apiResponse = await response.json();

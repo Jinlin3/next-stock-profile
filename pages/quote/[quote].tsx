@@ -9,6 +9,7 @@ import styles from '@/styles/quote.module.css';
 import { Alert } from 'react-bootstrap';
 import ArticlePreview from '@/components/ArticlePreview';
 import StockChart from '@/components/StockChart';
+import { companyInfo } from '@/models/FMP';
 
 const currentDate = new Date();
 const yesterday = new Date(currentDate);
@@ -29,16 +30,18 @@ interface QuoteProps {
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const companies = [
-    'AAPL',
-    'MSFT',
-    'V',
-    'GOOG',
-    'AMZN',
-    'NVDA',
-    'META',
-    'TSLA',
-  ]
+
+  const dowResponse = await fetch(`https://financialmodelingprep.com/api/v3/dowjones_constituent?apikey=${process.env.FMP_API_KEY}`);
+  const dowResponseJson: companyInfo[] = await dowResponse.json();
+  console.log(dowResponseJson);
+  const nasdaqResponse = await fetch(`https://financialmodelingprep.com/api/v3/nasdaq_constituent?apikey=${process.env.FMP_API_KEY}`);
+  const nasdaqResponseJson: companyInfo[] = await nasdaqResponse.json();
+  console.log(nasdaqResponseJson);
+
+  const dowCompanies: string[] = dowResponseJson.map((company: companyInfo) => company.symbol);
+  const nasdaqCompanies: string[] = nasdaqResponseJson.map((company: companyInfo) => company.symbol);
+
+  const companies: string[] = [...dowCompanies, ...nasdaqCompanies];
   const paths = companies.map(company => ({ params: {quote: company} }));
   console.log(paths);
   return {

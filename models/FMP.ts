@@ -1,7 +1,3 @@
-export interface FMPResponse {
-  companies: companyInfo[],
-}
-
 export interface companyInfo {
   symbol: string,
   name: string,
