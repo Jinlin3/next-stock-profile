@@ -8,6 +8,7 @@ import { Open_Sans, Montserrat } from 'next/font/google';
 import styles from '@/styles/quote.module.css';
 import { Alert } from 'react-bootstrap';
 import ArticlePreview from '@/components/ArticlePreview';
+import StockChart from '@/components/StockChart';
 
 const currentDate = new Date();
 const yesterday = new Date(currentDate);
@@ -76,6 +77,8 @@ const Quote = ({stockData, articles} : QuoteProps) => {
           This page uses <strong>Dynamic Routing and getStaticProps</strong> for fast loading speeds, and it uses <strong>incremental static regeneration</strong> to show new data
         </Alert>
         <ProfileDetailsCard stockData={ stockData } date={ formattedDate } />
+        <h2>Chart</h2>
+        <StockChart />
         <h2 className={`display-4 text-center mt-5 ${styles.h1Styles}`}>{`Top ${symbol} Headlines`}</h2>
         {articles.map((article) => (
           <ArticlePreview key={article.title} article={article}></ArticlePreview>

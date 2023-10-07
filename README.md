@@ -36,3 +36,9 @@ This website includes server-side rendering with NextJS.
 * Will use Tailwind instead (allows for custom styles without the limitations of Bootstrap)
 * Will consider the use client-side VS server-side rendering a bit more carefully
 * Will use MERN (MongoDB, ExpressJS, React/Next, Node) development to create a backend
+
+## TODO
+
+* Create a chart using ApexCharts on the Quote Page
+* Expand company list
+* Create separate pages for DOW, S&P500, and NASDAQ (maybe descriptions)
