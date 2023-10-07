@@ -1,5 +1,5 @@
 import ProfileDetailsCard from '@/components/ProfileDetailsCard';
-import { Aggregates, AggregatesResults, Article, DailyOpenClose, PreviousClose, StockPrices, TickerNews } from '@/models/PolygonResponse';
+import { Aggregates, AggregatesResults, Article, DailyOpenClose, PreviousClose, StockPrices, TickerNews, Tickers } from '@/models/PolygonResponse';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { GetStaticProps, GetStaticPaths } from 'next';
 import Head from "next/head";
@@ -24,6 +24,7 @@ const openSans = Open_Sans({ subsets: ['latin'] });
 const montserrat = Montserrat({subsets: ['latin']});
 
 interface QuoteProps {
+  companyName: string,
   stockData: StockPrices,
   articles: Article[],
   aggregates: AggregatesResults[],
@@ -53,14 +54,17 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps<QuoteProps> = async ({params}) => {
   const symbol = params?.quote?.toString();
   console.log(symbol);
-  const response = await fetch(`https://api.polygon.io/v2/aggs/ticker/${symbol}/prev?adjusted=true&apiKey=${process.env.POLYGON_API_KEY}`);
+  const response = await fetch(`https://api.polygon.io/v2/aggs/ticker/${symbol}/prev?adjusted=true&apiKey=${process.env.POLYGON_API_KEY}`); // Previous Close
   const previousCloseResponse: PreviousClose = await response.json();
-  const response2 = await fetch(`https://api.polygon.io/v2/reference/news?ticker=${symbol}&limit=10&apiKey=${process.env.POLYGON_API_KEY}`);
+  const response2 = await fetch(`https://api.polygon.io/v2/reference/news?ticker=${symbol}&limit=10&apiKey=${process.env.POLYGON_API_KEY}`); // Ticker News
   const tickerNewsResponse: TickerNews = await response2.json();
-  const response3 = await fetch(`https://api.polygon.io/v2/aggs/ticker/${symbol}/range/10/minute/${formattedDate}/${formattedDate}?adjusted=true&sort=asc&apiKey=${process.env.POLYGON_API_KEY}`);
+  const response3 = await fetch(`https://api.polygon.io/v2/aggs/ticker/${symbol}/range/10/minute/${formattedDate}/${formattedDate}?adjusted=true&sort=asc&apiKey=${process.env.POLYGON_API_KEY}`); // Aggregates
   const aggregatesResponse: Aggregates = await response3.json();
+  const response4 = await fetch(`https://api.polygon.io/v3/reference/tickers?ticker=${symbol}&active=true&apiKey=${process.env.POLYGON_API_KEY}`);
+  const tickersResponse: Tickers = await response4.json();
   return {
     props: {
+      companyName: tickersResponse.results[0].name,
       stockData: previousCloseResponse.results[0],
       articles: tickerNewsResponse.results,
       aggregates: aggregatesResponse.results,
@@ -69,7 +73,7 @@ export const getStaticProps: GetStaticProps<QuoteProps> = async ({params}) => {
   }
 }
 
-const Quote = ({stockData, articles, aggregates} : QuoteProps) => {
+const Quote = ({companyName, stockData, articles, aggregates} : QuoteProps) => {
   console.log(stockData);
   const router = useRouter();
   const symbol = router.query.quote?.toString();
@@ -80,7 +84,7 @@ const Quote = ({stockData, articles, aggregates} : QuoteProps) => {
       </Head>
       <main className={openSans.className}>
         <div className="d-flex flex-column align-items-center pb-3">
-          <h1 className={`display-1 text-center mt-3 ${styles.h1Styles}`}>{ stockData.T }</h1>
+          <h1 className={`display-5 text-center mt-3 mb-4 fw-bold ${styles.companyNameStyles}`}>{ companyName }</h1>
           <h3 className={`text-white text-center text-nowrap ${styles.h4Styles}`}>{`Date: ${formattedDate}`}</h3>
         </div>
         <Alert className="text-center mb-4">

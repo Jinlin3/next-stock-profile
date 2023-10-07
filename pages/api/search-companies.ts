@@ -1,9 +1,9 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import { FMPResponse } from '@/models/FMP';
+import { companyInfo } from '@/models/FMP';
 import { DailyOpenClose } from '@/models/PolygonResponse';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-let selectedIndex: FMPResponse;
+let selectedIndex: companyInfo[];
 
 export default async function handler(
   req: NextApiRequest,
@@ -13,11 +13,11 @@ export default async function handler(
 
   if (searchQuery === 'dow') {
     const response = await fetch(`https://financialmodelingprep.com/api/v3/dowjones_constituent?apikey=${process.env.FMP_API_KEY}`);
-    const apiResponse = await response.json();
+    const apiResponse: companyInfo[] = await response.json();
     selectedIndex = apiResponse;
   } else if (searchQuery === 'nasdaq') {
     const response = await fetch(`https://financialmodelingprep.com/api/v3/nasdaq_constituent?apikey=${process.env.FMP_API_KEY}`);
-    const apiResponse = await response.json();
+    const apiResponse: companyInfo[] = await response.json();
     selectedIndex = apiResponse;
   } else {
     return res.status(400).json({ error: "Invalid index specified" });
