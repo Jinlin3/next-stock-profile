@@ -76,8 +76,9 @@ const Quote = ({stockData, articles, aggregates} : QuoteProps) => {
         <title key="title">{`Stock Price - ${symbol}`}</title>
       </Head>
       <main className={openSans.className}>
-        <h1 className={`display-1 text-center my-3 ${styles.h1Styles}`}>{ stockData.T }</h1>
-        <Alert className="text-center">
+        <h1 className={`display-1 text-center mt-3 ${styles.h1Styles}`}>{ stockData.T }</h1>
+        <h4 className={`display-6 text-center ${styles.h4Styles}`}>{ formattedDate }</h4>
+        <Alert className="text-center mb-4">
           This page uses <strong>Dynamic Routing and getStaticProps</strong> for fast loading speeds, and it uses <strong>incremental static regeneration</strong> to show new data
         </Alert>
         <ProfileDetailsCard stockData={ stockData } date={ formattedDate } />

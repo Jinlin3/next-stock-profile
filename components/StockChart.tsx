@@ -1,6 +1,7 @@
 import { AggregatesResults } from '@/models/PolygonResponse';
 import { ApexOptions } from 'apexcharts';
 import dynamic from 'next/dynamic';
+import styles from '@/styles/StockChart.module.css';
 const Chart = dynamic(() => import('react-apexcharts'), {ssr: false});
 
 interface StockChartProps {
@@ -19,7 +20,8 @@ const chart: ApexOptions = {
   chart: {
     type: 'candlestick',
     id: 'apexchart-example',
-    height: 350
+    width: "100%",
+    height: "500px",
   },
   xaxis: {
     type: 'datetime',
@@ -61,13 +63,13 @@ const StockChart = ({aggregates}: StockChartProps) => {
     data: timeDataArray,
   }];
   return (
-    <div className="candlestick-chart">
+    <div className={`${styles.chartStyles}`}>
       {(typeof window !== 'undefined') && 
         <Chart
         options={chart}
         series={chartSeries}
         type="candlestick"
-        width="100%"
+        height="400px"
       />
       }
     </div>
