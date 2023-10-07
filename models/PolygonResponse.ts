@@ -22,6 +22,28 @@ export interface PreviousClose {
   ticker: string,
 }
 
+export interface Aggregates {
+  adjusted: boolean,
+  next_url: string,
+  queryCount: number,
+  request_id: string,
+  results: AggregatesResults[],
+  resultsCount: number,
+  status: string,
+  ticker: string,
+}
+
+export interface AggregatesResults {
+  c: number,
+  h: number,
+  l: number,
+  n: number,
+  o: number,
+  t: number,
+  v: number,
+  vw: number,
+}
+
 export interface StockPrices {
   T: string,
   c: number,

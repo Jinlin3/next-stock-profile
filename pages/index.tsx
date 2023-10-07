@@ -69,7 +69,7 @@ export default function Home({companyPreviewDataArray}: HomeProps) {
       <main className={`${openSans.className}`}>
         <div className="d-flex flex-column align-items-center pb-3">
           <h1 className={`display-1 text-center ${styles.h1Styles} ${montserrat.className}`}>YesterTrade</h1>
-          <h2 className={`text-center ${styles.subHeadingStyles}`}>Simple and Accurate Data</h2>
+          <h2 className={`text-center text-nowrap ${styles.subHeadingStyles}`}>Simple and Accurate Data</h2>
           <h3 className="mt-2 text-center text-white">{`Yesterday's Date: ${formattedDate}`}</h3>
         </div>
         <Alert className="text-center">

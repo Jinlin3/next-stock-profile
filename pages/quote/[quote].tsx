@@ -1,5 +1,5 @@
 import ProfileDetailsCard from '@/components/ProfileDetailsCard';
-import { Article, DailyOpenClose, PreviousClose, StockPrices, TickerNews } from '@/models/PolygonResponse';
+import { Aggregates, AggregatesResults, Article, DailyOpenClose, PreviousClose, StockPrices, TickerNews } from '@/models/PolygonResponse';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { GetStaticProps, GetStaticPaths } from 'next';
 import Head from "next/head";
@@ -25,6 +25,7 @@ const montserrat = Montserrat({subsets: ['latin']});
 interface QuoteProps {
   stockData: StockPrices,
   articles: Article[],
+  aggregates: AggregatesResults[],
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
@@ -53,16 +54,19 @@ export const getStaticProps: GetStaticProps<QuoteProps> = async ({params}) => {
   const previousCloseResponse: PreviousClose = await response.json();
   const response2 = await fetch(`https://api.polygon.io/v2/reference/news?ticker=${symbol}&limit=10&apiKey=${process.env.POLYGON_API_KEY}`);
   const tickerNewsResponse: TickerNews = await response2.json();
+  const response3 = await fetch(`https://api.polygon.io/v2/aggs/ticker/${symbol}/range/10/minute/${formattedDate}/${formattedDate}?adjusted=true&sort=asc&apiKey=${process.env.POLYGON_API_KEY}`);
+  const aggregatesResponse: Aggregates = await response3.json();
   return {
     props: {
       stockData: previousCloseResponse.results[0],
       articles: tickerNewsResponse.results,
+      aggregates: aggregatesResponse.results,
     },
     revalidate: 5 * 60,
   }
 }
 
-const Quote = ({stockData, articles} : QuoteProps) => {
+const Quote = ({stockData, articles, aggregates} : QuoteProps) => {
   console.log(stockData);
   const router = useRouter();
   const symbol = router.query.quote?.toString();
@@ -77,9 +81,9 @@ const Quote = ({stockData, articles} : QuoteProps) => {
           This page uses <strong>Dynamic Routing and getStaticProps</strong> for fast loading speeds, and it uses <strong>incremental static regeneration</strong> to show new data
         </Alert>
         <ProfileDetailsCard stockData={ stockData } date={ formattedDate } />
-        <h2>Chart</h2>
-        <StockChart />
-        <h2 className={`display-4 text-center mt-5 ${styles.h1Styles}`}>{`Top ${symbol} Headlines`}</h2>
+        <h2 className={`text-center mt-5 display-4 ${styles.h1Styles}`}>{`${symbol} Stock`}</h2>
+        <StockChart aggregates={aggregates} />
+        <h2 className={`display-4 text-center my-5 ${styles.h1Styles}`}>{`Top ${symbol} Headlines`}</h2>
         {articles.map((article) => (
           <ArticlePreview key={article.title} article={article}></ArticlePreview>
         ))}
