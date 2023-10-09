@@ -26,7 +26,7 @@ interface QuoteProps {
   companyName: string,
   stockData: StockPrices,
   articles: Article[],
-  aggregates: AggregatesResults[],
+  aggregates: AggregatesResults[] | null,
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
@@ -40,9 +40,10 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const nasdaqCompanies: string[] = nasdaqResponseJson.map((company: companyInfo) => company.symbol);
 
   const companies: string[] = [...dowCompanies, ...nasdaqCompanies];
-  const paths = companies.map(company => ({ params: {quote: company} }));
-  console.log(paths);
-  const pathsList = JSON.stringify(paths);
+  const uniqueCompanies = companies.filter((value, index) => companies.indexOf(value) === index);
+  console.log(uniqueCompanies);
+  const paths = uniqueCompanies.map(company => ({ params: {quote: company} }));
+  
   return {
     paths,
     fallback: false,
@@ -59,6 +60,20 @@ export const getStaticProps: GetStaticProps<QuoteProps> = async ({params}) => {
   const aggregatesResponse: Aggregates = await response3.json();
   const response4 = await fetch(`https://api.polygon.io/v3/reference/tickers?ticker=${symbol}&active=true&apiKey=${process.env.POLYGON_API_KEY}`);
   const tickersResponse: Tickers = await response4.json();
+
+  // Whenever the date changes, sometimes the aggregates return no results. This line just checks for that so no error occurs.
+  if (aggregatesResponse.resultsCount === 0) {
+    return {
+      props: {
+        companyName: tickersResponse.results[0].name,
+        stockData: previousCloseResponse.results[0],
+        articles: tickerNewsResponse.results,
+        aggregates: null,
+      },
+      revalidate: 5 * 60,
+    }
+  }
+
   return {
     props: {
       companyName: tickersResponse.results[0].name,
@@ -87,8 +102,11 @@ const Quote = ({companyName, stockData, articles, aggregates} : QuoteProps) => {
           This page uses <strong>Dynamic Routing and getStaticProps</strong> for fast loading speeds, and it uses <strong>incremental static regeneration</strong> to show new data
         </Alert>
         <ProfileDetailsCard stockData={ stockData } date={ formattedDate } />
-        <h2 className={`text-center mt-5 display-4 ${styles.h2Styles}`}>{`Stock Price`}</h2>
-        <StockChart aggregates={aggregates} />
+        { aggregates && 
+        <>
+          <StockChart aggregates={aggregates} />
+          <h2 className={`text-center mt-5 display-4 ${styles.h2Styles}`}>{`Stock Price`}</h2>
+        </> }
         <h2 className={`display-4 text-center mt-5 mb-3 ${styles.h2Styles}`}>{`Top Headlines`}</h2>
         {articles.map((article) => (
           <ArticlePreview key={article.title} article={article}></ArticlePreview>
