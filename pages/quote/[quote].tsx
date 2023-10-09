@@ -18,7 +18,6 @@ const date = yesterday.getDate().toString().padStart(2, '0');
 const month = (yesterday.getMonth() + 1).toString().padStart(2, '0');
 const year = yesterday.getFullYear().toString();
 const formattedDate = `${year}-${month}-${date}`;
-console.log(formattedDate);
 
 const openSans = Open_Sans({ subsets: ['latin'] });
 const montserrat = Montserrat({subsets: ['latin']});
@@ -34,10 +33,8 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
   const dowResponse = await fetch(`https://financialmodelingprep.com/api/v3/dowjones_constituent?apikey=${process.env.FMP_API_KEY}`);
   const dowResponseJson: companyInfo[] = await dowResponse.json();
-  console.log(dowResponseJson);
   const nasdaqResponse = await fetch(`https://financialmodelingprep.com/api/v3/nasdaq_constituent?apikey=${process.env.FMP_API_KEY}`);
   const nasdaqResponseJson: companyInfo[] = await nasdaqResponse.json();
-  console.log(nasdaqResponseJson);
 
   const dowCompanies: string[] = dowResponseJson.map((company: companyInfo) => company.symbol);
   const nasdaqCompanies: string[] = nasdaqResponseJson.map((company: companyInfo) => company.symbol);
@@ -45,6 +42,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const companies: string[] = [...dowCompanies, ...nasdaqCompanies];
   const paths = companies.map(company => ({ params: {quote: company} }));
   console.log(paths);
+  const pathsList = JSON.stringify(paths);
   return {
     paths,
     fallback: false,
@@ -53,7 +51,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps<QuoteProps> = async ({params}) => {
   const symbol = params?.quote?.toString();
-  console.log(symbol);
   const response = await fetch(`https://api.polygon.io/v2/aggs/ticker/${symbol}/prev?adjusted=true&apiKey=${process.env.POLYGON_API_KEY}`); // Previous Close
   const previousCloseResponse: PreviousClose = await response.json();
   const response2 = await fetch(`https://api.polygon.io/v2/reference/news?ticker=${symbol}&limit=10&apiKey=${process.env.POLYGON_API_KEY}`); // Ticker News
@@ -74,7 +71,6 @@ export const getStaticProps: GetStaticProps<QuoteProps> = async ({params}) => {
 }
 
 const Quote = ({companyName, stockData, articles, aggregates} : QuoteProps) => {
-  console.log(stockData);
   const router = useRouter();
   const symbol = router.query.quote?.toString();
   return (
