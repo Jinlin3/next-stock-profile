@@ -10,6 +10,7 @@ import { Alert } from 'react-bootstrap';
 import ArticlePreview from '@/components/ArticlePreview';
 import StockChart from '@/components/StockChart';
 import { companyInfo } from '@/models/FMP';
+import GraphOffline from '@/components/GraphOffline';
 
 const currentDate = new Date();
 const yesterday = new Date(currentDate);
@@ -102,11 +103,15 @@ const Quote = ({companyName, stockData, articles, aggregates} : QuoteProps) => {
           This page uses <strong>Dynamic Routing and getStaticProps</strong> for fast loading speeds, and it uses <strong>incremental static regeneration</strong> to show new data
         </Alert>
         <ProfileDetailsCard stockData={ stockData } date={ formattedDate } />
+        { !aggregates &&
+          <GraphOffline />
+        }
         { aggregates && 
         <>
           <StockChart aggregates={aggregates} />
           <h2 className={`text-center mt-5 display-4 ${styles.h2Styles}`}>{`Stock Price`}</h2>
         </> }
+
         <h2 className={`display-4 text-center mt-5 mb-3 ${styles.h2Styles}`}>{`Top Headlines`}</h2>
         {articles.map((article) => (
           <ArticlePreview key={article.title} article={article}></ArticlePreview>
