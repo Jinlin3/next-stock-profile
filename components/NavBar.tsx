@@ -16,7 +16,7 @@ const NavBar = () => {
     }
   }
   return (  
-    <Navbar bg="dark" variant="dark" sticky="top" expand="md" collapseOnSelect>
+    <Navbar variant="dark" sticky="top" expand="md" collapseOnSelect className={`${styles.navbarStyles}`}>
       <Container>
         <Navbar.Toggle aria-controls="navbar-collapse" />
         <Navbar.Collapse id="navbar-collapse">
@@ -31,7 +31,7 @@ const NavBar = () => {
                 <Form.Control name="searchQuery" type="text" placeholder="e.g. AAPL, GOOG, ..." className={styles.SearchBarStyles} />
               </Col>
               <Col xs="auto">
-                <Button type="submit" className="btn-md">Submit</Button>
+                <Button type="submit" className="btn-md btn-secondary">Submit</Button>
               </Col>
             </Row>
           </Form>

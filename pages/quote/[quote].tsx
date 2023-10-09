@@ -112,7 +112,7 @@ const Quote = ({companyName, stockData, articles, aggregates} : QuoteProps) => {
           <h2 className={`text-center mt-5 display-4 ${styles.h2Styles}`}>{`Stock Price`}</h2>
         </> }
 
-        <h2 className={`display-4 text-center mt-5 mb-3 ${styles.h2Styles}`}>{`Top Headlines`}</h2>
+        <h2 className={`display-5 text-center mt-5 mb-3 ${styles.h2Styles}`}>{`Top Headlines`}</h2>
         {articles.map((article) => (
           <ArticlePreview key={article.title} article={article}></ArticlePreview>
         ))}

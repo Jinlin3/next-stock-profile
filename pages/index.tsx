@@ -77,7 +77,7 @@ export default function Home({companyPreviewDataArray}: HomeProps) {
         <Alert className="text-center">
           This page runs on <strong><a href="https://site.financialmodelingprep.com/" target="_blank">Financial Modeling Prep</a></strong> and <strong><a href="https://polygon.io/" target="_blank">polygon.io</a></strong>.
         </Alert>
-        <h2 className="display-5 text-center my-4 text-white">Popular Tech Companies</h2>
+        <h2 className="display-6 text-center my-4 text-white">Popular Tech Companies</h2>
         <div className="pb-5">
           <Row xs={1} sm={2} xl={3} className="g-4 align-items-center">
             {companyPreviewDataArray.map((company) => (
