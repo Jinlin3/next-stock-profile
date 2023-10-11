@@ -22,8 +22,8 @@ const NavBar = () => {
         <Navbar.Collapse id="navbar-collapse">
           <Nav className="me-auto">
             <Nav.Link as={Link} href="/">Home</Nav.Link>
-            <Nav.Link href="#" disabled>Dow Jones</Nav.Link>
-            <Nav.Link href="#" disabled>NASDAQ-100</Nav.Link>
+            <Nav.Link as={Link} href="/indices/dowjones">Dow Jones</Nav.Link>
+            <Nav.Link as={Link} href="/indices/nasdaq">Nasdaq</Nav.Link>
           </Nav>
           <Form className='d-flex' onSubmit={handleSubmit}>
             <Row className="d-flex align-items-center">

@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { GetStaticProps, GetStaticPaths } from 'next';
 import Head from "next/head";
 import { useRouter } from 'next/router';
-import { Open_Sans, Montserrat } from 'next/font/google';
+import { Open_Sans } from 'next/font/google';
 import styles from '@/styles/quote.module.css';
 import { Alert } from 'react-bootstrap';
 import ArticlePreview from '@/components/ArticlePreview';
@@ -21,7 +21,6 @@ const year = yesterday.getFullYear().toString();
 const formattedDate = `${year}-${month}-${date}`;
 
 const openSans = Open_Sans({ subsets: ['latin'] });
-const montserrat = Montserrat({subsets: ['latin']});
 
 interface QuoteProps {
   companyName: string,

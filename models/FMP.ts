@@ -8,3 +8,5 @@ export interface companyInfo {
   cik: string,
   founded: string,
 }
+
+// json response will be an array of companyInfo
