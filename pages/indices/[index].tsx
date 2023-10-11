@@ -6,6 +6,7 @@ import { IndexCompanyPreview } from "@/models/IndexPage";
 import { PreviousClose } from "@/models/PolygonResponse";
 import IndexCard from "@/components/IndexCard";
 import { Alert } from "react-bootstrap";
+import Head from "next/head";
 
 interface IndexProps {
   companies: IndexCompanyPreview[],
@@ -67,6 +68,9 @@ const Index = ({companies}: IndexProps) => {
   }
   return (  
     <>
+      <Head>
+        <title key="title">{`TidalWave - ${title}`}</title>
+      </Head>
       <main>
         <div className={openSans.className}>
           <h1 className={`display-5 fw-bold text-center text-white`}>{title}</h1>
