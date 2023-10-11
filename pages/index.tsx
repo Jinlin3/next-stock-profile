@@ -7,6 +7,7 @@ import { DailyOpenClose, PreviousClose, StockPrices } from '@/models/PolygonResp
 import { GetServerSideProps } from 'next';
 import styles from '@/styles/home.module.css';
 import Link from 'next/link';
+import GraphOffline from '@/components/GraphOffline';
 
 interface companyPreviewData {
   name: string,
@@ -47,7 +48,7 @@ export const getServerSideProps: GetServerSideProps<HomeProps> = async () => {
   let companyPreviewDataArray: companyPreviewData[] = [];
   for (const company of companies) {
     const response = await fetch(`https://api.polygon.io/v2/aggs/ticker/${company.name}/prev?adjusted=true&apiKey=${process.env.POLYGON_API_KEY}`);
-    const apiResponse: PreviousClose = await response.json();
+    const apiResponse: PreviousClose = await response.json(); // fetches stock data
     companyPreviewDataArray.push({
       name: company.name,
       imageURL: company.URL,
@@ -77,16 +78,21 @@ export default function Home({companyPreviewDataArray}: HomeProps) {
         <Alert className="text-center">
           This page runs on <strong><a href="https://site.financialmodelingprep.com/" target="_blank">Financial Modeling Prep</a></strong> and <strong><a href="https://polygon.io/" target="_blank">polygon.io</a></strong>.
         </Alert>
-        <h2 className="display-6 text-center my-4 text-white">Popular Tech Companies</h2>
-        <div className="pb-5">
-          <Row xs={1} sm={2} xl={3} className="g-4 align-items-center">
-            {companyPreviewDataArray.map((company) => (
-              <Col xl={3} lg={3} md={6} xs={10} key={company.name} className="mx-auto">
-                <ProfilePreviewCard name={company.name} imageURL={company.imageURL} stockData={company.stockData} />
-              </Col>
-            ))}
-          </Row>  
-        </div>      
+        { !companyPreviewDataArray[0].stockData && <GraphOffline /> }
+        { companyPreviewDataArray[0].stockData && 
+          <>
+            <h2 className="display-6 text-center my-4 text-white">Popular Tech Companies</h2>
+            <div className="pb-5">
+              <Row xs={1} sm={2} xl={3} className="g-4 align-items-center">
+                {companyPreviewDataArray.map((company) => (
+                  <Col xl={3} lg={3} md={6} xs={10} key={company.name} className="mx-auto">
+                    <ProfilePreviewCard name={company.name} imageURL={company.imageURL} stockData={company.stockData} />
+                  </Col>
+                ))}
+              </Row>  
+            </div>
+          </>
+        }      
       </main>
     </>
   );
