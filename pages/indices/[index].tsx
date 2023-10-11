@@ -21,7 +21,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
   const paths = indexSlugs.map((slug) => (
     {
-      params: { indices: slug }
+      params: { index: slug }
     }
   ));
   
@@ -56,7 +56,7 @@ export const getStaticProps: GetStaticProps<IndexProps> = async ({params}) => {
   }
 }
 
-const index = ({companies}: IndexProps) => {
+const Index = ({companies}: IndexProps) => {
   const router = useRouter();
   const indexName = router.query.index?.toString();
   let title;
@@ -85,5 +85,5 @@ const index = ({companies}: IndexProps) => {
   );
 }
  
-export default index;
+export default Index;
 <></>
