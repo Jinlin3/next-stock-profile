@@ -14,7 +14,7 @@ import GraphOffline from '@/components/GraphOffline';
 
 const currentDate = new Date();
 const yesterday = new Date(currentDate);
-yesterday.setDate(currentDate.getDate() - 2);
+yesterday.setDate(currentDate.getDate() - 1);
 const date = yesterday.getDate().toString().padStart(2, '0');
 const month = (yesterday.getMonth() + 1).toString().padStart(2, '0');
 const year = yesterday.getFullYear().toString();
