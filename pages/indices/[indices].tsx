@@ -21,7 +21,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
   const paths = indexSlugs.map((slug) => (
     {
-      params: { index: slug }
+      params: { indices: slug }
     }
   ));
   
