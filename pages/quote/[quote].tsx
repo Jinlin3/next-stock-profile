@@ -107,8 +107,8 @@ const Quote = ({companyName, stockData, articles, aggregates} : QuoteProps) => {
         }
         { aggregates && 
         <>
-          <StockChart aggregates={aggregates} />
           <h2 className={`text-center mt-5 display-4 ${styles.h2Styles}`}>{`Stock Price`}</h2>
+          <StockChart aggregates={aggregates} />
         </> }
 
         <h2 className={`display-5 text-center mt-5 mb-3 ${styles.h2Styles}`}>{`Top Headlines`}</h2>

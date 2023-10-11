@@ -61,15 +61,18 @@ const Index = ({companies}: IndexProps) => {
   const router = useRouter();
   const indexName = router.query.index?.toString();
   let title;
+  let head;
   if (indexName === 'dowjones') {
     title = 'Dow Jones';
+    head = 'Dow Jones';
   } else if (indexName === 'nasdaq') {
     title = 'NASDAQ-100';
+    head = 'NASDAQ100'
   }
   return (  
     <>
       <Head>
-        <title key="title">{`TidalWave - ${title}`}</title>
+        <title key="title">{`TidalWave - ${head}`}</title>
       </Head>
       <main>
         <div className={openSans.className}>
