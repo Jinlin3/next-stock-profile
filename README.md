@@ -4,6 +4,12 @@ This is an upgraded version of my react-stock-profile with cleaner code and resp
 
 Capable of grabbing data from all NASDAQ-100 and Dow Jones companies.
 
+## Features
+
+* Home Page - Displays popular tech companies at the moment, allowing the user to click on the cards and travel to the Quote Page
+* Quote Page - Displays information on the stock price for a specific company, a candlestick chart, and news articles
+* Indices Page - Displays the companies for either the NASDAQ-100 or Dow Jones
+
 ## What I Learned from this Project
 
 * NextJS (Pages)
