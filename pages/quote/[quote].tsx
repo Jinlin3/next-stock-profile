@@ -88,6 +88,7 @@ export const getStaticProps: GetStaticProps<QuoteProps> = async ({params}) => {
 const Quote = ({companyName, stockData, articles, aggregates} : QuoteProps) => {
   const router = useRouter();
   const symbol = router.query.quote?.toString();
+  console.log(aggregates);
   return (
     <>
       <Head>
