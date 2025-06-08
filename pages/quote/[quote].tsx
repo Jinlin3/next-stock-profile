@@ -50,29 +50,43 @@ export const getStaticPaths: GetStaticPaths = async () => {
   }
 }
 
-export const getStaticProps: GetStaticProps<QuoteProps> = async ({params}) => {
+export const getStaticProps: GetStaticProps<QuoteProps> = async ({ params }) => {
   const symbol = params?.quote?.toString();
-  const response = await fetch(`https://api.polygon.io/v2/aggs/ticker/${symbol}/prev?adjusted=true&apiKey=${process.env.POLYGON_API_KEY}`); // Previous Close
-  const previousCloseResponse: PreviousClose = await response.json();
-  const response2 = await fetch(`https://api.polygon.io/v2/reference/news?ticker=${symbol}&limit=10&apiKey=${process.env.POLYGON_API_KEY}`); // Ticker News
-  const tickerNewsResponse: TickerNews = await response2.json();
-  const response3 = await fetch(`https://api.polygon.io/v2/aggs/ticker/${symbol}/range/10/minute/${formattedDate}/${formattedDate}?adjusted=true&sort=asc&apiKey=${process.env.POLYGON_API_KEY}`); // Aggregates
-  const aggregatesResponse: Aggregates = await response3.json();
-  const response4 = await fetch(`https://api.polygon.io/v3/reference/tickers?ticker=${symbol}&active=true&apiKey=${process.env.POLYGON_API_KEY}`);
-  const tickersResponse: Tickers = await response4.json();
 
-  // Whenever the date changes, sometimes the aggregates return no results. This line just checks for that so no error occurs.
-  if (aggregatesResponse.resultsCount === 0) {
+  const previousCloseRes = await fetch(`https://api.polygon.io/v2/aggs/ticker/${symbol}/prev?adjusted=true&apiKey=${process.env.POLYGON_API_KEY}`);
+  const previousCloseResponse: PreviousClose = await previousCloseRes.json();
+
+  const newsRes = await fetch(`https://api.polygon.io/v2/reference/news?ticker=${symbol}&limit=10&apiKey=${process.env.POLYGON_API_KEY}`);
+  const tickerNewsResponse: TickerNews = await newsRes.json();
+
+  const aggRes = await fetch(`https://api.polygon.io/v2/aggs/ticker/${symbol}/range/10/minute/${formattedDate}/${formattedDate}?adjusted=true&sort=asc&apiKey=${process.env.POLYGON_API_KEY}`);
+  const aggregatesResponse: Aggregates = await aggRes.json();
+
+  const tickerInfoRes = await fetch(`https://api.polygon.io/v3/reference/tickers?ticker=${symbol}&active=true&apiKey=${process.env.POLYGON_API_KEY}`);
+  const tickersResponse: Tickers = await tickerInfoRes.json();
+
+  // 🔒 Safe checks
+  const hasCloseData = previousCloseResponse.results && previousCloseResponse.results.length > 0;
+  const hasTickerName = tickersResponse.results && tickersResponse.results.length > 0;
+
+  if (!hasCloseData || !hasTickerName) {
+    console.warn(`Missing data for symbol: ${symbol}`);
     return {
-      props: {
-        companyName: tickersResponse.results[0].name,
-        stockData: previousCloseResponse.results[0],
-        articles: tickerNewsResponse.results,
-        aggregates: null,
-      },
-      revalidate: 5 * 60,
-    }
+      notFound: true, // optional: you can also return default dummy values instead
+    };
   }
+
+  return {
+    props: {
+      companyName: tickersResponse.results[0].name,
+      stockData: previousCloseResponse.results[0],
+      articles: tickerNewsResponse.results,
+      aggregates: aggregatesResponse.resultsCount > 0 ? aggregatesResponse.results : null,
+    },
+    revalidate: 5 * 60,
+  };
+};
+
 
   return {
     props: {
