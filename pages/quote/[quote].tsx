@@ -45,8 +45,8 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const paths = uniqueCompanies.map(company => ({ params: {quote: company} }));
   
   return {
-    paths,
-    fallback: false,
+    paths: [], // don't pre-generate anything
+    fallback: 'blocking', // generate on first request
   }
 }
 
