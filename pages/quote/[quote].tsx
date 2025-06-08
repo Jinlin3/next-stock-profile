@@ -30,25 +30,30 @@ interface QuoteProps {
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-
+  // Fetch constituent data (limit this to avoid extra load)
   const dowResponse = await fetch(`https://financialmodelingprep.com/api/v3/dowjones_constituent?apikey=${process.env.FMP_API_KEY}`);
   const dowResponseJson: companyInfo[] = await dowResponse.json();
+
   const nasdaqResponse = await fetch(`https://financialmodelingprep.com/api/v3/nasdaq_constituent?apikey=${process.env.FMP_API_KEY}`);
   const nasdaqResponseJson: companyInfo[] = await nasdaqResponse.json();
 
-  const dowCompanies: string[] = dowResponseJson.map((company: companyInfo) => company.symbol);
-  const nasdaqCompanies: string[] = nasdaqResponseJson.map((company: companyInfo) => company.symbol);
+  // Combine and deduplicate symbols
+  const allSymbols = [...dowResponseJson, ...nasdaqResponseJson]
+    .map(company => company.symbol)
+    .filter((value, index, self) => self.indexOf(value) === index);
 
-  const companies: string[] = [...dowCompanies, ...nasdaqCompanies];
-  const uniqueCompanies = companies.filter((value, index) => companies.indexOf(value) === index);
-  console.log(uniqueCompanies);
-  const paths = uniqueCompanies.map(company => ({ params: {quote: company} }));
-  
+  // Just grab the first 5 symbols to stay safe under API rate limits
+  const topSymbols = allSymbols.slice(0, 5);
+
+  const paths = topSymbols.map(symbol => ({
+    params: { quote: symbol },
+  }));
+
   return {
-    paths: [], // don't pre-generate anything
-    fallback: 'blocking', // generate on first request
-  }
-}
+    paths,
+    fallback: 'blocking', // other symbols will be generated on-demand
+  };
+};
 
 export const getStaticProps: GetStaticProps<QuoteProps> = async ({ params }) => {
   const symbol = params?.quote?.toString();

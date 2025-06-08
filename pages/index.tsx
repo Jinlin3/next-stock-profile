@@ -3,21 +3,7 @@ import { Open_Sans, Montserrat } from 'next/font/google';
 import { Alert, Button, Col, Container, Form, Row } from 'react-bootstrap';
 import ProfilePreviewCard from '@/components/ProfilePreviewCard';
 import { CompanyNameAndURL } from '@/models/CompanyNameAndURL';
-import { DailyOpenClose, PreviousClose, StockPrices } from '@/models/PolygonResponse';
-import { GetServerSideProps } from 'next';
 import styles from '@/styles/home.module.css';
-import Link from 'next/link';
-import GraphOffline from '@/components/GraphOffline';
-
-interface companyPreviewData {
-  name: string,
-  imageURL: string,
-}
-
-interface HomeProps {
-  techCompaniesData: companyPreviewData[],
-  otherCompaniesData: companyPreviewData[],
-}
 
 const openSans = Open_Sans({ subsets: ['latin'] });
 const montserrat = Montserrat({subsets: ['latin']});
@@ -54,31 +40,7 @@ const year = yesterday.getFullYear().toString();
 const formattedDate = `${year}-${month}-${date}`;
 console.log(formattedDate);
 
-// fetches data server side
-export const getServerSideProps: GetServerSideProps<HomeProps> = async () => {
-  let techCompaniesData: companyPreviewData[] = [];
-  for (const company of techCompanies) {
-    techCompaniesData.push({
-      name: company.name,
-      imageURL: company.URL,
-    });
-  }
-  let otherCompaniesData: companyPreviewData[] = [];
-  for (const company of otherCompanies) {
-    otherCompaniesData.push({
-      name: company.name,
-      imageURL: company.URL,
-    });
-  }
-  return {
-    props: {
-      techCompaniesData,
-      otherCompaniesData,
-    }
-  }
-}
-
-export default function Home({techCompaniesData, otherCompaniesData}: HomeProps) {
+export default function Home() {
   return (
     <>
       <Head>
@@ -91,18 +53,18 @@ export default function Home({techCompaniesData, otherCompaniesData}: HomeProps)
           <h3 className="mt-2 text-center text-white text-nowrap">{`Date: ${formattedDate}`}</h3>
         </div>
         <Alert className="text-center">
-          This page uses <strong>getServerSideProps</strong> to fetch for server-side data fetching, which allows for <strong>improved user experience and SEO.</strong>
+          This page is <strong>statically rendered</strong> for fast loading and SEO.
         </Alert>
         <Alert className="text-center">
-          This page runs on <strong><a href="https://site.financialmodelingprep.com/" target="_blank">Financial Modeling Prep</a></strong> and <strong><a href="https://polygon.io/" target="_blank">polygon.io&apos;s</a></strong> free API, which only allows for 5 API calls a minute.
+          This dashboard runs on <strong><a href="https://site.financialmodelingprep.com/" target="_blank">Financial Modeling Prep</a></strong> and <strong><a href="https://polygon.io/" target="_blank">polygon.io&apos;s</a></strong> free API, which only allows for 5 API calls a minute.
         </Alert>
-        <Alert className="text-center"><strong>If you run into a 404, it&apos;s because of API rate limiters.</strong></Alert>
+        <Alert className="text-center">If you run into a <strong>404</strong>, it&apos;s because of API rate limiters.</Alert>
         <h2 className="display-5 text-center my-4 text-white">Popular Tech Companies</h2>
         <div className="pb-2">
           <Row xs={1} sm={2} xl={3} className="g-4 align-items-center">
-            {techCompaniesData.map((company) => (
+            {techCompanies.map((company) => (
               <Col xl={3} lg={3} md={6} xs={10} key={company.name} className="mx-auto">
-                <ProfilePreviewCard name={company.name} imageURL={company.imageURL} />
+                <ProfilePreviewCard name={company.name} imageURL={company.URL} />
               </Col>
             ))}
           </Row>  
@@ -110,9 +72,9 @@ export default function Home({techCompaniesData, otherCompaniesData}: HomeProps)
         <h2 className="display-5 text-center my-4 text-white">Other Companies</h2>
         <div className="pb-5">
           <Row xs={1} sm={2} xl={3} className="g-4 align-items-center">
-            {otherCompaniesData.map((company) => (
+            {otherCompanies.map((company) => (
               <Col xl={3} lg={3} md={6} xs={10} key={company.name} className="mx-auto">
-                <ProfilePreviewCard name={company.name} imageURL={company.imageURL} />
+                <ProfilePreviewCard name={company.name} imageURL={company.URL} />
               </Col>
             ))}
           </Row>  
