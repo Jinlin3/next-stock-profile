@@ -94,8 +94,9 @@ export default function Home({techCompaniesData, otherCompaniesData}: HomeProps)
           This page uses <strong>getServerSideProps</strong> to fetch for server-side data fetching, which allows for <strong>improved user experience and SEO.</strong>
         </Alert>
         <Alert className="text-center">
-          This page runs on <strong><a href="https://site.financialmodelingprep.com/" target="_blank">Financial Modeling Prep</a></strong> and <strong><a href="https://polygon.io/" target="_blank">polygon.io</a></strong>.
+          This page runs on <strong><a href="https://site.financialmodelingprep.com/" target="_blank">Financial Modeling Prep</a></strong> and <strong><a href="https://polygon.io/" target="_blank">polygon.io&apos;s</a></strong> free API, which only allows for 5 API calls a minute.
         </Alert>
+        <Alert className="text-center"><strong>If you run into a 404, it's because of API rate limiters.</strong></Alert>
         <h2 className="display-5 text-center my-4 text-white">Popular Tech Companies</h2>
         <div className="pb-2">
           <Row xs={1} sm={2} xl={3} className="g-4 align-items-center">
