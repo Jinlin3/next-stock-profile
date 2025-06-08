@@ -87,18 +87,6 @@ export const getStaticProps: GetStaticProps<QuoteProps> = async ({ params }) => 
   };
 };
 
-
-  return {
-    props: {
-      companyName: tickersResponse.results[0].name,
-      stockData: previousCloseResponse.results[0],
-      articles: tickerNewsResponse.results,
-      aggregates: aggregatesResponse.results,
-    },
-    revalidate: 5 * 60,
-  }
-}
-
 const Quote = ({companyName, stockData, articles, aggregates} : QuoteProps) => {
   const router = useRouter();
   const symbol = router.query.quote?.toString();
