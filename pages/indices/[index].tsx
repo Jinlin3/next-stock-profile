@@ -92,7 +92,7 @@ const Index = ({companies}: IndexProps) => {
             This page uses <strong>Dynamic Routing and getStaticProps</strong> for fast loading speeds, and it uses <strong>incremental static regeneration</strong> to show new data
           </Alert>
           <Alert className="text-center mb-2">
-            Due to <strong>polygon.io's</strong> free API, data might fail to load.
+            Due to <strong>polygon.io&apos;s</strong> free API, data might fail to load.
           </Alert>
           <h2 className={`text-center mb-3 display-4 text-white`}>{`Companies`}</h2>
           <div>
