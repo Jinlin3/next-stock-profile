@@ -70,10 +70,37 @@ export const getStaticProps: GetStaticProps<QuoteProps> = async ({ params }) => 
   const hasTickerName = tickersResponse.results && tickersResponse.results.length > 0;
 
   if (!hasCloseData || !hasTickerName) {
-    console.warn(`Missing data for symbol: ${symbol}`);
-    return {
-      notFound: true, // optional: you can also return default dummy values instead
-    };
+    console.warn(`Missing data for symbol: ${symbol}. Retrying...`);
+
+    // Retry once after 3 seconds
+    await new Promise(res => setTimeout(res, 3000));
+    try {
+      const retryCloseRes = await fetch(`https://api.polygon.io/v2/aggs/ticker/${symbol}/prev?adjusted=true&apiKey=${process.env.POLYGON_API_KEY}`);
+      const retryCloseJson: PreviousClose = await retryCloseRes.json();
+      const retryTickersRes = await fetch(`https://api.polygon.io/v3/reference/tickers?ticker=${symbol}&active=true&apiKey=${process.env.POLYGON_API_KEY}`);
+      const retryTickersJson: Tickers = await retryTickersRes.json();
+
+      const retryHasCloseData = retryCloseJson.results && retryCloseJson.results.length > 0;
+      const retryHasName = retryTickersJson.results && retryTickersJson.results.length > 0;
+
+      if (!retryHasCloseData || !retryHasName) {
+        return { notFound: true };
+      }
+
+      return {
+        props: {
+          companyName: retryTickersJson.results[0].name,
+          stockData: retryCloseJson.results[0],
+          articles: [],
+          aggregates: null,
+        },
+        revalidate: 60 * 5,
+      };
+
+    } catch (e) {
+      console.error(`Retry failed for ${symbol}:`, e);
+      return { notFound: true };
+    }
   }
 
   return {
