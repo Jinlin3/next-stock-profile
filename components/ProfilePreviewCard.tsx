@@ -1,8 +1,5 @@
 import { Card, ListGroup, Spinner } from "react-bootstrap";
 import styles from "@/styles/profilePreviewCard.module.css";
-import { GetServerSideProps } from "next";
-import { DailyOpenClose, PreviousClose, StockPrices } from "@/models/PolygonResponse";
-import { useState, useEffect } from "react";
 import { Montserrat } from 'next/font/google'
 import Link from "next/link";
 

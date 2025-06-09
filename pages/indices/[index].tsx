@@ -35,7 +35,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps<IndexProps> = async ({params}) => {
   const index = params?.index?.toString();
   const response1 = await fetch(`https://financialmodelingprep.com/api/v3/${index}_constituent?apikey=${process.env.FMP_API_KEY}`);
-  const FMPResponse: companyInfo[] = await response1.json(); // returns name information about each company
+  const FMPResponse: companyInfo[] = (await response1.json()).slice(0, 5); // returns name information for 5 companies
 
   let companyArray: IndexCompanyPreview[] = [];
   for (const company of FMPResponse) {
@@ -63,7 +63,7 @@ export const getStaticProps: GetStaticProps<IndexProps> = async ({params}) => {
   return {
     props: {
       companies: companyArray,
-      revalidate: 5 * 60,
+      revalidate: 5 * 60, // every 5 minutes
     }
   }
 }
@@ -89,10 +89,12 @@ const Index = ({companies}: IndexProps) => {
         <div className={openSans.className}>
           <h1 className={`display-5 fw-bold text-center text-white`}>{title}</h1>
           <Alert className="text-center mb-2">
-            This page uses <strong>Dynamic Routing and getStaticProps</strong> for fast loading speeds, and it uses <strong>incremental static regeneration</strong> to show new data
+            This page uses <strong>getStaticProps</strong> for extremely fast loading speeds. <br/>
+            It also uses <strong>Incremental Static Regeneration (ISR)</strong> to update static content every 5 minutes.
           </Alert>
           <Alert className="text-center mb-2">
-            Due to <strong>polygon.io&apos;s</strong> free API, data might fail to load.
+            Due to <strong>polygon.io&apos;s</strong> free API, we can serve at most 5 companies. <br/>
+            If this page is blank, please try reloading later.
           </Alert>
           <h2 className={`text-center mb-3 display-4 text-white`}>{`Companies`}</h2>
           <div>
@@ -107,4 +109,3 @@ const Index = ({companies}: IndexProps) => {
 }
  
 export default Index;
-<></>
