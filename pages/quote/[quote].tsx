@@ -94,8 +94,8 @@ const Quote = ({error, companyName, stockData, articles, aggregates} : QuoteProp
         </Head>
         <main>
           <Alert className="text-center mb-4">
-            We're currently having issues fetching data for <strong>{symbol}</strong>. <br />
-            The API limit has been reached or <strong>{symbol}</strong> doesn't exist.
+            We&apos;re currently having issues fetching data for <strong>{symbol}</strong>. <br />
+            The API limit has been reached or <strong>{symbol}</strong> doesn&apos;t exist.
           </Alert>
         </main>
       </>
