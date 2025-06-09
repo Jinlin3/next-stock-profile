@@ -31,7 +31,7 @@ const NavBar = () => {
                 <Form.Control name="searchQuery" type="text" placeholder="e.g. AAPL, GOOG, ..." className={styles.SearchBarStyles} />
               </Col>
               <Col xs="auto">
-                <Button type="submit" className="btn-md btn-secondary">Submit</Button>
+                <Button type="submit" className="btn-md btn-dark">Submit</Button>
               </Col>
             </Row>
           </Form>
